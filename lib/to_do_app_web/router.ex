@@ -20,6 +20,21 @@ defmodule ToDoAppWeb.Router do
     get "/", PageController, :home
   end
 
+  scope "/", ToDoAppWeb do
+    pipe_through :browser
+
+    resources "/tasks", TaskController do
+      get    "/",      TaskController, :index
+      get    "/:id",   TaskController, :show
+      get    "/new",   TaskController, :new
+      post   "/",      TaskController, :create
+      get    "/:id/edit", TaskController, :edit
+      patch  "/:id",   TaskController, :update
+      put    "/:id",   TaskController, :update
+      delete "/:id",   TaskController, :delete
+    end
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", ToDoAppWeb do
   #   pipe_through :api
